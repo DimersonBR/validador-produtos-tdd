@@ -1,0 +1,33 @@
+name: Esteira de Integracao Continua - Validador
+ 
+# 1. O Gatilho (Quando é que a catraca da alfândega é ativada?)
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+ 
+# 2. O Ambiente Limpo (Onde é que a inspeção acontece?)
+jobs:
+  testes-de-qualidade:
+    runs-on: ubuntu-latest
+ 
+    # 3. O Passo a Passo (O que o servidor vai fazer sozinho)
+    steps:
+    - name: 📥 Descarregar o código (Checkout)
+      uses: actions/checkout@v4
+ 
+    - name: 🐍 Preparar o terreno (Instalar Python)
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+ 
+    - name: 📦 Instalar dependências
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest
+ 
+    - name: ⚖️ O Juiz Implacável (Executar os testes)
+      run: |
+        python -m pytest test_validador_produto.py -v
+tem menu de contexto
